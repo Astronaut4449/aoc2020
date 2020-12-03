@@ -6,3 +6,6 @@ build
 
 # Ignore input files
 input/*.txt
+
+# Ignore IntelliJ Idea directory
+.idea
