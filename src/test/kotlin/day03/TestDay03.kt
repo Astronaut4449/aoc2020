@@ -36,11 +36,11 @@ class TestDay03 {
 
     @Test
     fun part1() {
-        assertEquals(7, countTrees(mapOfTrees, slopes[1]))
+        assertEquals(7, mapOfTrees.treeEncounters(slopes[1]))
     }
 
     @Test
     fun part2() {
-        assertEquals(336, multiplyTreeCount(mapOfTrees, slopes))
+        assertEquals(336, mapOfTrees.multipliedTreeEncounters(slopes))
     }
 }

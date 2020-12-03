@@ -16,19 +16,12 @@ val slopes: List<Slope> = listOf(
 fun main(args: Array<String>) {
     val mapOfTrees = MapOfTrees(File(args.firstOrNull() ?: "input/day03.txt").readText())
 
-    val part1 = countTrees(mapOfTrees, slopes[1])
+    val part1 = mapOfTrees.treeEncounters(slopes[1])
     println("Part 1: $part1")
 
-    val part2 = multiplyTreeCount(mapOfTrees, slopes)
+    val part2 = mapOfTrees.multipliedTreeEncounters(slopes)
     println("Part 2: $part2")
 }
-
-fun countTrees(mapOfTrees: MapOfTrees, slope: Slope): Int = generateSequence(Point(0, 0), slope)
-        .take(mapOfTrees.sizeY)
-        .count { point -> mapOfTrees.hasTreeAt(point) }
-
-fun multiplyTreeCount(mapOfTrees: MapOfTrees, slopes: List<Slope>) = slopes
-        .fold(1) { acc, slope -> acc * countTrees(mapOfTrees, slope) }
 
 class MapOfTrees(str: String) {
     private val trees: Set<Point>
@@ -43,9 +36,18 @@ class MapOfTrees(str: String) {
         sizeX = lines.first().count()
 
         trees = str.lines().flatMapIndexed { y, line ->
-            line.mapIndexedNotNull { x, char -> if (char == '#') Point(x, y) else null }
+            line.mapIndexedNotNull { x, char ->
+                if (char == '#') Point(x, y) else null
+            }
         }.toSet()
     }
 
     fun hasTreeAt(point: Point): Boolean = Point(point.x % sizeX, point.y) in trees
+
+    fun treeEncounters(slope: Slope) = generateSequence(Point(0, 0), slope)
+            .take(sizeY)
+            .count { point -> hasTreeAt(point) }
+
+    fun multipliedTreeEncounters(slopes: List<Slope>) = slopes
+            .fold(1) { acc, slope -> acc * treeEncounters(slope) }
 }
