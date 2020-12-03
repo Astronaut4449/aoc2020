@@ -44,6 +44,8 @@ tasks {
  * Task for executing a day of advent of code.
  */
 open class Day : JavaExec() {
+    @Optional
+    @Input
     var inputPath: String? = null
 
     @Option(option = "input", description = "path to input for day")
