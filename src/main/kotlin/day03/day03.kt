@@ -21,7 +21,6 @@ fun main(args: Array<String>) {
     println("Part 2: $part2")
 }
 
-
 fun countTrees(mapOfTrees: MapOfTrees, slope: (Point) -> Point): Int = generateSequence(Point(0, 0), slope)
         .take(mapOfTrees.sizeY)
         .count { point -> mapOfTrees.isTree(point) }
