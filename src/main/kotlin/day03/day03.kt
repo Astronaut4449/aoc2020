@@ -3,7 +3,9 @@ package day03
 import java.io.File
 import common.Point2D as Point
 
-val slopes: List<(Point) -> Point> = listOf(
+typealias Slope = (Point) -> Point
+
+val slopes: List<Slope> = listOf(
         1 to 1,
         3 to 1,
         5 to 1,
@@ -21,11 +23,11 @@ fun main(args: Array<String>) {
     println("Part 2: $part2")
 }
 
-fun countTrees(mapOfTrees: MapOfTrees, slope: (Point) -> Point): Int = generateSequence(Point(0, 0), slope)
+fun countTrees(mapOfTrees: MapOfTrees, slope: Slope): Int = generateSequence(Point(0, 0), slope)
         .take(mapOfTrees.sizeY)
         .count { point -> mapOfTrees.hasTreeAt(point) }
 
-fun multiplyTreeCount(mapOfTrees: MapOfTrees, slopes: List<(Point) -> Point>) = slopes
+fun multiplyTreeCount(mapOfTrees: MapOfTrees, slopes: List<Slope>) = slopes
         .fold(1) { acc, slope -> acc * countTrees(mapOfTrees, slope) }
 
 class MapOfTrees(str: String) {
