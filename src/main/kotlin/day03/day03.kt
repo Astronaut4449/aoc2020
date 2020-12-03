@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
 
 fun countTrees(mapOfTrees: MapOfTrees, slope: (Point) -> Point): Int = generateSequence(Point(0, 0), slope)
         .take(mapOfTrees.sizeY)
-        .count { point -> mapOfTrees.isTree(point) }
+        .count { point -> mapOfTrees.hasTreeAt(point) }
 
 fun multiplyTreeCount(mapOfTrees: MapOfTrees, slopes: List<(Point) -> Point>) = slopes
         .fold(1) { acc, slope -> acc * countTrees(mapOfTrees, slope) }
@@ -45,5 +45,5 @@ class MapOfTrees(str: String) {
         }.toSet()
     }
 
-    fun isTree(point: Point): Boolean = Point(point.x % sizeX, point.y) in trees
+    fun hasTreeAt(point: Point): Boolean = Point(point.x % sizeX, point.y) in trees
 }
