@@ -28,8 +28,8 @@ fun main(args: Array<String>) {
 class MapOfTrees(str: String) {
     private val treePositions: Set<Point>
 
-    val sizeX: Int
-    val sizeY: Int
+    private val sizeX: Int
+    private val sizeY: Int
 
     init {
         val lines = str.lines()
