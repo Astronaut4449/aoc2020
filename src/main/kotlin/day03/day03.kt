@@ -4,12 +4,12 @@ import java.io.File
 import common.Point2D as Point
 
 val slopes: List<(Point) -> Point> = listOf(
-        { Point(it.x + 1, it.y + 1) },
-        { Point(it.x + 3, it.y + 1) },
-        { Point(it.x + 5, it.y + 1) },
-        { Point(it.x + 7, it.y + 1) },
-        { Point(it.x + 1, it.y + 2) },
-)
+        1 to 1,
+        3 to 1,
+        5 to 1,
+        7 to 1,
+        1 to 2,
+).map { (dx, dy) -> { Point(it.x + dx, it.y + dy) } }
 
 fun main(args: Array<String>) {
     val mapOfTrees = MapOfTrees(File(args.firstOrNull() ?: "input/day03.txt").readText())
