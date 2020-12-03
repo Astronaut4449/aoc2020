@@ -11,7 +11,9 @@ val slopes: List<Slope> = listOf(
         5 to 1,
         7 to 1,
         1 to 2,
-).map { (dx, dy) -> { Point(it.x + dx, it.y + dy) } }
+).map { (dx, dy) ->
+    { Point(it.x + dx, it.y + dy) }
+}
 
 fun main(args: Array<String>) {
     val mapOfTrees = MapOfTrees(File(args.firstOrNull() ?: "input/day03.txt").readText())
