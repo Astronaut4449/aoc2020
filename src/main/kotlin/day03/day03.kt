@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
 }
 
 class MapOfTrees(str: String) {
-    private val trees: Set<Point>
+    private val treePositions: Set<Point>
 
     val sizeX: Int
     val sizeY: Int
@@ -37,14 +37,14 @@ class MapOfTrees(str: String) {
         sizeY = lines.count()
         sizeX = lines.first().count()
 
-        trees = str.lines().flatMapIndexed { y, line ->
+        treePositions = str.lines().flatMapIndexed { y, line ->
             line.mapIndexedNotNull { x, char ->
                 if (char == '#') Point(x, y) else null
             }
         }.toSet()
     }
 
-    fun hasTreeAt(point: Point): Boolean = Point(point.x % sizeX, point.y) in trees
+    fun hasTreeAt(point: Point): Boolean = Point(point.x % sizeX, point.y) in treePositions
 
     fun treeEncounters(slope: Slope) = generateSequence(Point(0, 0), slope)
             .take(sizeY)
