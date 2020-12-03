@@ -16,6 +16,7 @@ tasks {
     (1..25).map { "$it".padStart(2, '0') }.forEach { i ->
         register<Day>("day$i") {
             group = "advent-of-code"
+            description = "Executes day $i. Use --input to provide the path for the input file."
             classpath(sourceSets.main.get().runtimeClasspath)
             mainClass.set("day$i.Day${i}Kt")
             doFirst {
