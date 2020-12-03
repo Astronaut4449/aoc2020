@@ -10,10 +10,10 @@ fun main(args: Array<String>) {
                 Pair(parsePolicy(policy), password)
             }
 
-    val validPasswordCount1 = policyPasswordPairs.count { (policy, password) -> policy.testPart1(password) }
+    val validPasswordCount1 = policyPasswordPairs.count { (policy, password) -> policy.validate1(password) }
     println("Part 1: $validPasswordCount1")
 
-    val validPasswordCount2 = policyPasswordPairs.count { (policy, password) -> policy.testPart2(password) }
+    val validPasswordCount2 = policyPasswordPairs.count { (policy, password) -> policy.validate2(password) }
     println("Part 2: $validPasswordCount2")
 }
 
@@ -24,6 +24,6 @@ fun parsePolicy(string: String): Policy {
 }
 
 class Policy(val char: Char, val range: IntRange) {
-    fun testPart1(password: String) = password.count { it == char } in range
-    fun testPart2(password: String) = (password[range.first - 1] == char) xor (password[range.last - 1] == char)
+    fun validate1(password: String) = password.count { it == char } in range
+    fun validate2(password: String) = (password[range.first - 1] == char) xor (password[range.last - 1] == char)
 }
