@@ -1,6 +1,5 @@
 package day04
 
-import day04.Field.Companion.requiredFields
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -15,9 +14,9 @@ fun main(args: Array<String>) {
 }
 
 enum class Field(val id: String, val validate: (String) -> Boolean) {
-    BirthYear("byr", { it.length == 4 && it.toInt() in 1920..2002 }),
-    IssueYear("iyr", { it.length == 4 && it.toInt() in 2010..2020 }),
-    ExpirationYear("eyr", { it.length == 4 && it.toInt() in 2020..2030 }),
+    BirthYear("byr", { it.toInt() in 1920..2002 }),
+    IssueYear("iyr", { it.toInt() in 2010..2020 }),
+    ExpirationYear("eyr", { it.toInt() in 2020..2030 }),
     Height("hgt", {
         when {
             it.endsWith("cm") -> it.dropLast(2).toInt() in 150..193
@@ -25,17 +24,25 @@ enum class Field(val id: String, val validate: (String) -> Boolean) {
             else -> false
         }
     }),
-    HairColor("hcl", { """#[a-z0-9]{6}""".toRegex().matches(it) }),
-    EyeColor("ecl", { it in setOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth") }),
-    PassportID("pid", { """\d{9}""".toRegex().matches(it) }),
+    HairColor("hcl", { hexColorPattern.matches(it) }),
+    EyeColor("ecl", { it in colors }),
+    PassportID("pid", { nineDigitPattern.matches(it) }),
     CountryID("cid", { true });
 
     companion object {
-        val requiredFields = values().filter { it != CountryID }
+        private val hexColorPattern = """#[a-z0-9]{6}""".toRegex()
+        private val nineDigitPattern = """\d{9}""".toRegex()
+        private val colors = setOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
+
+        fun ofId(id: String) = values().first { it.id == id }
     }
 }
 
 class Password(private val fieldToValue: Map<Field, String>) : Map<Field, String> by fieldToValue {
+    companion object {
+        val requiredFields = Field.values().filter { it != Field.CountryID }
+    }
+
     val hasRequiredFields: Boolean = requiredFields.all { it in keys }
     val isValid: Boolean = hasRequiredFields && all { (field, value) -> field.validate(value) }
 }
@@ -44,8 +51,9 @@ fun parsePasswords(str: String): List<Password> = str
         .split("""(\r?\n){2}""".toRegex()) // separate passwords
         .map { it.replace("""(\r?\n)""".toRegex(), " ") } // join passwords to one line
         .map { line -> // split into key-value-pairs
-            Password(line.split(' ').map { keyValuePair ->
-                val (key, value) = keyValuePair.split(':')
-                enumValues<Field>().find { it.id == key }!! to value
-            }.toMap())
+            line.split(' ').map { joinedKeyValuePair ->
+                val (key, value) = joinedKeyValuePair.split(':')
+                Field.ofId(key) to value
+            }
         }
+        .map { pairs -> Password(pairs.toMap()) }
