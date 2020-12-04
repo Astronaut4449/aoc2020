@@ -30,7 +30,7 @@ enum class Field(val id: String, val validate: (String) -> Boolean) {
     CountryID("cid", { true });
 
     companion object {
-        private val hexColorPattern = """#[a-z0-9]{6}""".toRegex()
+        private val hexColorPattern = """#[a-f0-9]{6}""".toRegex()
         private val nineDigitPattern = """\d{9}""".toRegex()
         private val colors = setOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
 
