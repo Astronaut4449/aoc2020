@@ -24,9 +24,9 @@ enum class Field(val id: String, val validate: (String) -> Boolean) {
             else -> false
         }
     }),
-    HairColor("hcl", { hexColorPattern.matches(it) }),
+    HairColor("hcl", { it matches hexColorPattern }),
     EyeColor("ecl", { it in colors }),
-    PassportID("pid", { nineDigitPattern.matches(it) }),
+    PassportID("pid", { it matches nineDigitPattern }),
     CountryID("cid", { true });
 
     companion object {
