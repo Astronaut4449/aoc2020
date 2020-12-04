@@ -40,7 +40,7 @@ enum class Field(val id: String, val validate: (String) -> Boolean) {
 
 class Password(private val fieldToValue: Map<Field, String>) : Map<Field, String> by fieldToValue {
     companion object {
-        val requiredFields = Field.values().filter { it != Field.CountryID }
+        private val requiredFields = Field.values().filter { it != Field.CountryID }
     }
 
     val hasRequiredFields: Boolean = requiredFields.all { it in keys }
