@@ -34,7 +34,7 @@ enum class Field(val id: String, val validate: (String) -> Boolean) {
         private val nineDigitPattern = """\d{9}""".toRegex()
         private val colors = setOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
 
-        fun ofId(id: String) = values().first { it.id == id }
+        fun ofId(id: String) = values().find { it.id == id }
     }
 }
 
@@ -53,7 +53,7 @@ fun parsePasswords(str: String): List<Password> = str
         .map { line -> // split into key-value-pairs
             line.split(' ').map { joinedKeyValuePair ->
                 val (key, value) = joinedKeyValuePair.split(':')
-                Field.ofId(key) to value
+                Field.ofId(key)!! to value
             }
         }
         .map { pairs -> Password(pairs.toMap()) }
