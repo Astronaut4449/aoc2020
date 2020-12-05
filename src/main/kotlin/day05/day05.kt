@@ -3,7 +3,7 @@ package day05
 import java.io.File
 
 fun main(args: Array<String>) {
-    val seats = File(args.firstOrNull() ?: "input/day05.txt").readLines().map { seat(it) }.toSet()
+    val seats = File(args.firstOrNull() ?: "input/day05.txt").readLines().map { seat(it) }
 
     val part1 = seats.maxOf { it.id }
     println("Part 1: $part1")
