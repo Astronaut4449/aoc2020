@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
     println("Part 2: $part2")
 }
 
-data class Seat(val row: Int, val column: Int) {
+class Seat(val row: Int, val column: Int) {
     val id = row * 8 + column
 }
 
