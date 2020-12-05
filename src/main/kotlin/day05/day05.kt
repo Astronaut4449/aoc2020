@@ -20,9 +20,9 @@ class Seat(val row: Int, val column: Int) {
 
 fun seat(code: String) = Seat(seatRow(code.substring(0..6)), seatColumn(code.substring(7..9)))
 
-fun seatRow(code: String): Int = bisect(code.map { it == 'F' }, 128)
+private fun seatRow(code: String): Int = bisect(code.map { it == 'F' }, 128)
 
-fun seatColumn(code: String): Int = bisect(code.map { it == 'L' }, 8)
+private fun seatColumn(code: String): Int = bisect(code.map { it == 'L' }, 8)
 
 private fun bisect(code: List<Boolean>, endExclusive: Int): Int {
     var low = 0
