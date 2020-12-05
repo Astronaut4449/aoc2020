@@ -9,8 +9,8 @@ fun main(args: Array<String>) {
     println("Part 1: $part1")
 
     val seatsById = seats.associateBy { it.id }
-    val seatWithGapNextToIt = seats.first { seatsById[it.id + 1] == null && seatsById[it.id + 2] != null }
-    val part2 = seatWithGapNextToIt.id + 1
+    val seatWithIdGapNextToIt = seats.first { seatsById[it.id + 1] == null && seatsById[it.id + 2] != null }
+    val part2 = seatWithIdGapNextToIt.id + 1
     println("Part 2: $part2")
 }
 
