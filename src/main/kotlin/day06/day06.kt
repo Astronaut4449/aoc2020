@@ -26,7 +26,7 @@ fun parseAnswerGroups(input: String): List<AnswerGroup> = input
         .splitOnBlankLines()
         .map { group ->
             group.lines().map { answers ->
-                answers.toCharArray().toSet()
+                answers.toSet()
             }
         }
 
