@@ -5,7 +5,7 @@ import java.io.File
 fun main(args: Array<String>) {
     val numbers = File(args.firstOrNull() ?: "input/day01.txt")
             .readLines()
-            .map { it.toInt() }
+            .map(String::toInt)
 
     println("Part 1: ${pairProduct2020(numbers)}")
     println("Part 2: ${tripleProduct2020(numbers)}")
