@@ -10,14 +10,14 @@ fun main(args: Array<String>) {
     val answerGroups = parseAnswerGroups(input)
 
     val part1 = answerGroups
-            .map { group -> group.reduce(Answers::union) }
-            .sumOf { it.size }
+            .map { group -> group.reduce(Answers::union).size }
+            .sum()
 
     println("Part 1: $part1")
 
     val part2 = answerGroups
-            .map { group -> group.reduce(Answers::intersect) }
-            .sumOf { it.size }
+            .map { group -> group.reduce(Answers::intersect).size }
+            .sum()
 
     println("Part 2: $part2")
 }
