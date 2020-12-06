@@ -7,11 +7,11 @@ fun main(args: Array<String>) {
             .readLines()
             .map { it.toInt() }
 
-    println("Part 1: ${pairProduct(numbers)}")
-    println("Part 2: ${tripleProduct(numbers)}")
+    println("Part 1: ${pairProduct2020(numbers)}")
+    println("Part 2: ${tripleProduct2020(numbers)}")
 }
 
-fun pairProduct(numbers: List<Int>): Int? {
+fun pairProduct2020(numbers: List<Int>): Int? {
     for (i in numbers.indices) {
         val a = numbers[i]
         for (j in (i + 1)..numbers.lastIndex) {
@@ -24,7 +24,7 @@ fun pairProduct(numbers: List<Int>): Int? {
     return null
 }
 
-fun tripleProduct(numbers: List<Int>): Int? {
+fun tripleProduct2020(numbers: List<Int>): Int? {
     for (i in numbers.indices) {
         val a = numbers[i]
         for (j in (i + 1)..numbers.lastIndex) {

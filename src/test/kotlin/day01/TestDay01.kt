@@ -8,11 +8,11 @@ class TestDay01 {
 
     @Test
     fun part1() {
-        assertEquals(514579, pairProduct(numbers))
+        assertEquals(514579, pairProduct2020(numbers))
     }
 
     @Test
     fun part2() {
-        assertEquals(241861950, tripleProduct(numbers))
+        assertEquals(241861950, tripleProduct2020(numbers))
     }
 }
