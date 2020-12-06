@@ -18,20 +18,12 @@ class Seat(val row: Int, val column: Int) {
     val id = row * 8 + column
 }
 
-fun seat(code: String) = Seat(seatRow(code.substring(0..6)), seatColumn(code.substring(7..9)))
+fun seat(binarySeatCode: String) = Seat(
+        row = binarySeatCode.substring(0..6).parseSeatToInt(),
+        column = binarySeatCode.substring(7..9).parseSeatToInt()
+)
 
-private fun seatRow(code: String): Int = bisect(code.map { it == 'F' }, 128)
-
-private fun seatColumn(code: String): Int = bisect(code.map { it == 'L' }, 8)
-
-private fun bisect(code: List<Boolean>, endExclusive: Int): Int {
-    var low = 0
-    var high = endExclusive
-
-    for (isLowerHalf in code) {
-        if (isLowerHalf) high -= (high - low) / 2
-        else low += (high - low) / 2
-    }
-
-    return low
-}
+private fun String.parseSeatToInt(): Int = this
+        .map { if (it == 'B' || it == 'R') '1' else '0' }
+        .joinToString("")
+        .toInt(2)
