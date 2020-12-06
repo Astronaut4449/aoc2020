@@ -1,6 +1,6 @@
 package day06
 
-import common.splitOnBlankLines
+import common.textBlocks
 import java.io.File
 
 typealias Answers = Set<Char>
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 }
 
 fun parseAnswerGroups(input: String): List<AnswerGroup> = input
-        .splitOnBlankLines()
+        .textBlocks()
         .map { group ->
             group.lines().map { answers ->
                 answers.toSet()
