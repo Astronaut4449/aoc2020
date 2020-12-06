@@ -1,5 +1,6 @@
 package day04
 
+import common.splitOnBlankLines
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -48,7 +49,7 @@ class Password(private val fieldToValue: Map<Field, String>) : Map<Field, String
 }
 
 fun parsePasswords(str: String): List<Password> = str
-        .split("""(\r?\n){2}""".toRegex()) // separate passwords
+        .splitOnBlankLines() // separate passwords
         .map { it.replace("""(\r?\n)""".toRegex(), " ") } // join passwords to one line
         .map { line -> // split into key-value-pairs
             line.split(' ').map { joinedKeyValuePair ->

@@ -1,5 +1,6 @@
 package day06
 
+import common.splitOnBlankLines
 import java.io.File
 
 typealias Answers = Set<Char>
@@ -29,5 +30,3 @@ fun parseAnswerGroups(input: String): List<AnswerGroup> = input
                 answers.toSet()
             }
         }
-
-fun String.splitOnBlankLines() = split("""(\r?\n){2}""".toRegex())
