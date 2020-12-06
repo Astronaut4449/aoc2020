@@ -24,7 +24,7 @@ class TestDay06 {
 
     @Test
     fun part1() {
-        val groups = groupAnswers(input, Set<Char>::union)
+        val groups = input.groupAnswersBy(Set<Char>::union)
 
         assertEquals(3, groups[0].size)
         assertEquals(3, groups[1].size)
@@ -37,7 +37,7 @@ class TestDay06 {
 
     @Test
     fun part2() {
-        val groups = groupAnswers(input, Set<Char>::intersect)
+        val groups = input.groupAnswersBy(Set<Char>::intersect)
 
         assertEquals(3, groups[0].size)
         assertEquals(0, groups[1].size)
