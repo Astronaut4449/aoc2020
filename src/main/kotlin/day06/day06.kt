@@ -2,26 +2,32 @@ package day06
 
 import java.io.File
 
+typealias Answers = Set<Char>
+typealias AnswerGroup = List<Answers>
+
 fun main(args: Array<String>) {
     val input = File(args.firstOrNull() ?: "input/day06.txt").readText()
-    val groups = input.groupAnswersBy(Set<Char>::union)
+    val answerGroups = parseAnswerGroups(input)
 
-    val part1 = groups.sumOf { it.size }
-    println(part1)
+    val part1 = answerGroups
+            .map { answers -> answers.reduce(Answers::union) }
+            .sumOf { it.size }
 
-    val part2 = input.groupAnswersBy(Set<Char>::intersect)
-    println(part2.sumOf { it.size })
+    println("Part 1: $part1")
+
+    val part2 = answerGroups
+            .map { answers -> answers.reduce(Answers::intersect) }
+            .sumOf { it.size }
+
+    println("Part 2: $part2")
 }
 
-fun String.groupAnswersBy(combine: Set<Char>.(Set<Char>) -> Set<Char>): List<Set<Char>> = this
+fun parseAnswerGroups(input: String): List<AnswerGroup> = input
         .splitOnBlankLines()
         .map { group ->
-            group
-                    .lines()
-                    .map {
-                        it.toCharArray().toSet()
-                    }
-                    .reduce { combined, set -> combined.combine(set) }
+            group.lines().map { answers ->
+                answers.toCharArray().toSet()
+            }
         }
 
 fun String.splitOnBlankLines() = split("""(\r?\n){2}""".toRegex())
