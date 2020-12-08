@@ -16,14 +16,12 @@ fun main(args: Array<String>) {
 private typealias BagType = String
 private typealias BagRegulations = Map<BagType, Map<BagType, Int>>
 
-private val innerBagPattern = """(\d+) (.*) bags?""".toRegex()
-
 fun parseInput(input: String): BagRegulations = input.lines().associate { line ->
     val (outerBagType, innerBagsPart) = line.split(" bags contain ")
 
-    val regulations = innerBagsPart.dropLast(1).split(", ").mapNotNull { innerBagPart ->
-        innerBagPattern.matchEntire(innerBagPart)?.destructured?.let { (amount, type) -> type to amount.toInt() }
-    }.toMap()
+    val regulations = Regex("""(\d+) (.*?) bags?""").findAll(innerBagsPart)
+            .map(MatchResult::destructured)
+            .associate { (amount, type) -> type to amount.toInt() }
 
     outerBagType to regulations
 }
