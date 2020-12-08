@@ -37,7 +37,7 @@ class TestDay07 {
 
     @Test
     fun part2() {
-        assertEquals(32, countRequiredBagsInsideGoldenBag(regulations1))
-        assertEquals(126, countRequiredBagsInsideGoldenBag(regulations2))
+        assertEquals(32, countBagsInsideGoldenBag(regulations1))
+        assertEquals(126, countBagsInsideGoldenBag(regulations2))
     }
 }

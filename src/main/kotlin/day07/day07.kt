@@ -9,50 +9,45 @@ fun main(args: Array<String>) {
     val part1 = countBagsThatCanContainGoldenBag(bagRegulations)
     println("Part 1: $part1")
 
-    val part2 = countRequiredBagsInsideGoldenBag(bagRegulations)
+    val part2 = countBagsInsideGoldenBag(bagRegulations)
     println("Part 2: $part2")
 }
 
+private typealias BagType = String
+private typealias BagRegulations = Map<BagType, Map<BagType, Int>>
+
 private val innerBagPattern = """(\d+) (.*) bags?""".toRegex()
 
-fun parseInput(input: String): Map<String, Map<String, Int>> = input.lines().associate { line ->
-    val (outerBagColor, innerBags) = line.split(" bags contain ")
+fun parseInput(input: String): BagRegulations = input.lines().associate { line ->
+    val (outerBagType, innerBagsPart) = line.split(" bags contain ")
 
-    val regulation = innerBags.dropLast(1).split(", ").mapNotNull { innerBag ->
-        val (amount, color) = innerBagPattern.matchEntire(innerBag)?.destructured ?: return@mapNotNull null
-        color to amount.toInt()
+    val regulations = innerBagsPart.dropLast(1).split(", ").mapNotNull { innerBagPart ->
+        innerBagPattern.matchEntire(innerBagPart)?.destructured?.let { (amount, color) -> color to amount.toInt() }
     }.toMap()
 
-    outerBagColor to regulation
+    outerBagType to regulations
 }
 
-fun countBagsThatCanContainGoldenBag(bagRegulations: Map<String, Map<String, Int>>): Int {
-    val cashedResults = mutableMapOf<String, Boolean>()
+fun countBagsThatCanContainGoldenBag(bagRegulations: BagRegulations): Int {
+    val cashedResults = mutableMapOf<BagType, Boolean>()
 
-    fun canContainGoldBag(bagColor: String): Boolean = if (bagColor in cashedResults) {
-        cashedResults[bagColor]!!
-    } else {
-        val containedBags = bagRegulations[bagColor]!!
-        val result = "shiny gold" in containedBags || containedBags.any { (color, _) -> canContainGoldBag(color) }
-        cashedResults[bagColor] = result
-        result
-    }
-
-    return bagRegulations.count { (bagColor, _) -> canContainGoldBag(bagColor) }
-}
-
-fun countRequiredBagsInsideGoldenBag(bagRegulations: Map<String, Map<String, Int>>): Int {
-    val cashedResults = mutableMapOf<String, Int>()
-
-    fun containedBagCount(color: String): Int = if (color in cashedResults) {
-        cashedResults[color]!!
-    } else {
-        val result = bagRegulations[color]!!.entries.fold(1) { acc, (color, count) ->
-            acc + count * containedBagCount(color)
+    fun containsGoldenBag(bagType: BagType): Boolean = cashedResults.getOrPut(bagType) {
+        bagRegulations[bagType]!!.keys.let { containedBags ->
+            "shiny gold" in containedBags || containedBags.any(::containsGoldenBag)
         }
-        cashedResults[color] = result
-        result
     }
 
-    return containedBagCount("shiny gold") - 1
+    return bagRegulations.count { (bagType, _) -> containsGoldenBag(bagType) }
+}
+
+fun countBagsInsideGoldenBag(bagRegulations: BagRegulations): Int {
+    val cashedResults = mutableMapOf<BagType, Int>()
+
+    fun bagTotal(bagType: BagType): Int = cashedResults.getOrPut(bagType) {
+        bagRegulations[bagType]!!.entries.fold(1) { total, (containedBag, containedAmount) ->
+            total + containedAmount * bagTotal(containedBag)
+        }
+    }
+
+    return bagTotal("shiny gold") - 1
 }
