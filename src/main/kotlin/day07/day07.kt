@@ -22,7 +22,7 @@ fun parseInput(input: String): BagRegulations = input.lines().associate { line -
     val (outerBagType, innerBagsPart) = line.split(" bags contain ")
 
     val regulations = innerBagsPart.dropLast(1).split(", ").mapNotNull { innerBagPart ->
-        innerBagPattern.matchEntire(innerBagPart)?.destructured?.let { (amount, color) -> color to amount.toInt() }
+        innerBagPattern.matchEntire(innerBagPart)?.destructured?.let { (amount, type) -> type to amount.toInt() }
     }.toMap()
 
     outerBagType to regulations
