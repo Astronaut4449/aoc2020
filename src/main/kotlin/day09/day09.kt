@@ -45,16 +45,12 @@ fun findSumWindow(numbers: List<Long>, invalidNumber: Long): List<Long> {
     var sum = numbers[0]
 
     while (sum != invalidNumber) {
-        when {
-            sum < invalidNumber -> {
-                windowEndInclusive += 1
-                sum += numbers[windowEndInclusive]
-            }
-
-            sum > invalidNumber -> {
-                sum -= numbers[windowStart]
-                windowStart += 1
-            }
+        if (sum < invalidNumber) {
+            windowEndInclusive += 1
+            sum += numbers[windowEndInclusive]
+        } else {
+            sum -= numbers[windowStart]
+            windowStart += 1
         }
     }
 
