@@ -9,8 +9,8 @@ fun main(args: Array<String>) {
     val part1 = findInvalidNumber(transmission)
     println("Part 1: $part1")
 
-    val set = findSumWindow(transmission, part1)
-    val part2 = set.minOrNull()!! + set.maxOrNull()!!
+    val window = findSumWindow(transmission, part1)
+    val part2 = window.minOrNull()!! + window.maxOrNull()!!
     println("Part 2: $part2")
 }
 
