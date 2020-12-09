@@ -33,8 +33,8 @@ fun process(instructions: List<Instruction>): Result {
     var index = 0
     val accumulatorAtIndex = mutableMapOf(index to accumulator)
 
-    while (true) {
-        val instruction = instructions.getOrNull(index) ?: return Success(accumulator)
+    while (index != instructions.size) {
+        val instruction = instructions[index]
         index += if (instruction.command == "jmp") instruction.value else 1
 
         if (index !in accumulatorAtIndex) {
@@ -44,6 +44,8 @@ fun process(instructions: List<Instruction>): Result {
             return Loop(accumulator)
         }
     }
+
+    return Success(accumulator)
 }
 
 fun accumulatorAfterFix(instructions: List<Instruction>): Int {
