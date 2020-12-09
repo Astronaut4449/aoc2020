@@ -25,9 +25,9 @@ fun findInvalidNumber(numbers: List<Long>, preamble: Int = 25): Long {
 
     // Find number
     for (i in preamble..numbers.lastIndex) {
-        val isItemPresentInSums = cashedSums.none { numbers[i] in it }
+        val isItemPresentInSums = cashedSums.any { cashedSum -> numbers[i] in cashedSum }
 
-        if (isItemPresentInSums) {
+        if (!isItemPresentInSums) {
             return numbers[i]
         } else {
             cashedSums.removeFirst()
